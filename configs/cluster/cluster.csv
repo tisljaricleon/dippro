@@ -1,4 +1,4 @@
-user,global_aggregator,,0.1,,
-user,local_aggregator,"user:10",0.1,,
-user,client,"user:10",0.2,24,0
+user-ga,global_aggregator,,0.1,,
+user-la,local_aggregator,"user-ga:10",0.1,,
+user-client,client,"user-la:10",0.2,24,0
 sem2-desktop,client,"user:100",0.3,24,1
