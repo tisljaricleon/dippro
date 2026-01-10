@@ -29,8 +29,8 @@ func parseClientID(s string) (int, error) {
 
 func GetGlobalRoundCost(configuration *flconfig.FlConfiguration, nodes map[string]*model.Node, modelSize float32, costSource CostSource, ids []int) float32 {
 	fmt.Println("DEBUG: GlobalAggregator ID:", configuration.GlobalAggregator.Id)
-	fmt.Println("DEBUG: LocalAggregators IDs:", func() []string { ids := []string{}; for _, la := range configuration.LocalAggregators { ids = append(ids, la.Id) }; return ids }()) )
-	fmt.Println("DEBUG: Clients IDs:", func() []string { ids := []string{}; for _, cl := range configuration.Clients { ids = append(ids, cl.Id) }; return ids }()) )
+	fmt.Println("DEBUG: LocalAggregators IDs:", func() []string { ids := []string{}; for _, la := range configuration.LocalAggregators { ids = append(ids, la.Id) }; return ids }() )
+	fmt.Println("DEBUG: Clients IDs:", func() []string { ids := []string{}; for _, cl := range configuration.Clients { ids = append(ids, cl.Id) }; return ids }() )
 
 	if costSource == COMMUNICATION {
 		gaCost := float32(0.0)
