@@ -28,10 +28,16 @@ func parseClientID(s string) (int, error) {
 }
 
 func GetGlobalRoundCost(configuration *flconfig.FlConfiguration, nodes map[string]*model.Node, modelSize float32, costSource CostSource, ids []int) float32 {
+	fmt.Println("DEBUG: GlobalAggregator ID:", configuration.GlobalAggregator.Id)
+	fmt.Println("DEBUG: LocalAggregators IDs:", func() []string { ids := []string{}; for _, la := range configuration.LocalAggregators { ids = append(ids, la.Id) }; return ids }()) )
+	fmt.Println("DEBUG: Clients IDs:", func() []string { ids := []string{}; for _, cl := range configuration.Clients { ids = append(ids, cl.Id) }; return ids }()) )
 
 	if costSource == COMMUNICATION {
 		gaCost := float32(0.0)
 		for _, localAggregator := range configuration.LocalAggregators {
+			if nodes[localAggregator.Id] == nil {
+				fmt.Println("ERROR: LocalAggregator node not found:", localAggregator.Id)
+			}
 			laNode := nodes[localAggregator.Id]
 			linkCost := laNode.CommunicationCosts[configuration.GlobalAggregator.Id]
 
@@ -40,6 +46,9 @@ func GetGlobalRoundCost(configuration *flconfig.FlConfiguration, nodes map[strin
 
 		laCost := float32(0.0)
 		for _, client := range configuration.Clients {
+			if nodes[client.Id] == nil {
+				fmt.Println("ERROR: Client node not found:", client.Id)
+			}
 			clientNode := nodes[client.Id]
 			linkCost := clientNode.CommunicationCosts[client.ParentNodeId]
 
@@ -56,11 +65,17 @@ func GetGlobalRoundCost(configuration *flconfig.FlConfiguration, nodes map[strin
 	//IF COST ENERGY THEN...
 
 	gaCost := float32(0.0)
+	if nodes[configuration.GlobalAggregator.Id] == nil {
+		fmt.Println("ERROR: GlobalAggregator node not found:", configuration.GlobalAggregator.Id)
+	}
 	gaNode := nodes[configuration.GlobalAggregator.Id]
 	gaCost = gaNode.EnergyCost
 
 	laCost := float32(0.0)
 	for _, localAggregator := range configuration.LocalAggregators {
+		if nodes[localAggregator.Id] == nil {
+			fmt.Println("ERROR: LocalAggregator node not found:", localAggregator.Id)
+		}
 		laNode := nodes[localAggregator.Id]
 		energyCost := laNode.EnergyCost * float32(configuration.LocalRounds)
 		laCost += float32(energyCost)
@@ -72,6 +87,9 @@ func GetGlobalRoundCost(configuration *flconfig.FlConfiguration, nodes map[strin
 		cl_id, _ := parseClientID(client.Id)
 		if HasID(ids, cl_id) {
 			continue
+		}
+		if nodes[client.Id] == nil {
+			fmt.Println("ERROR: Client node not found:", client.Id)
 		}
 		clNode := nodes[client.Id]
 		energyCost := clNode.EnergyCost * float32(configuration.Epochs) * float32(configuration.LocalRounds)
