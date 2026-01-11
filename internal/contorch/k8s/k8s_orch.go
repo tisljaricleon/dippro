@@ -42,15 +42,12 @@ type K8sOrchestrator struct {
 }
 
 func NewK8sOrchestrator(configFilePath string, eventBus *events.EventBus, simulation bool, namespace string) (*K8sOrchestrator, error) {
-		       config, err := clientcmd.BuildConfigFromFlags("", configFilePath)
-		       if err != nil {
-			       log.Println(err.Error())
-			       return nil, err
-		       }
-		       // Skip TLS verification for self-signed certs, and clear CAFile/CAData to avoid conflict
-		       config.TLSClientConfig.Insecure = true
-		       config.TLSClientConfig.CAFile = ""
-		       config.TLSClientConfig.CAData = nil
+	// connect to Kubernetes cluster
+	config, err := clientcmd.BuildConfigFromFlags("", configFilePath)
+	if err != nil {
+		log.Println(err.Error())
+		return nil, err
+	}
 
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
