@@ -125,15 +125,16 @@ func GetClientsAndAggregators(nodes []*model.Node) (*model.Node, []*model.Node, 
 func ClientNodesToFlClients(clients []*model.Node, flAggregator *model.FlAggregator, epochs int32) []*model.FlClient {
 	flClients := []*model.FlClient{}
 	for _, client := range clients {
-		flClient := &model.FlClient{
-			Id:               client.Id,
-			ParentAddress:    flAggregator.ExternalAddress,
-			ParentNodeId:     flAggregator.Id,
-			Epochs:           epochs,
-			DataDistribution: client.DataDistribution,
-			NumPartitions:    client.NumPartitions,
-			PartitionId:      client.PartitionId,
-		}
+		   flClient := &model.FlClient{
+			   Id:               client.Id,
+			   ParentAddress:    flAggregator.ExternalAddress,
+			   ParentNodeId:     flAggregator.Id,
+			   Epochs:           epochs,
+			   DataDistribution: client.DataDistribution,
+			   NumPartitions:    client.NumPartitions,
+			   PartitionId:      client.PartitionId,
+			   Architecture:     client.Architecture, // propagate architecture
+		   }
 
 		flClients = append(flClients, flClient)
 	}

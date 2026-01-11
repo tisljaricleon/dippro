@@ -11,6 +11,7 @@ type FlClient struct {
 	BatchSize        int32
 	LearningRate     float32
 	ClientUtility    ClientUtility
+	Architecture     string // "amd64" or "arm64" (Jetson)
 }
 
 type FlAggregator struct {

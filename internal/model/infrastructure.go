@@ -10,6 +10,7 @@ type Node struct {
 	DataDistribution   map[string]int64   // class ID -> number of samples
 	NumPartitions      int32
 	PartitionId        int32
+	Architecture       string // "amd64" or "arm64" (Jetson)
 }
 
 type NodeResources struct {

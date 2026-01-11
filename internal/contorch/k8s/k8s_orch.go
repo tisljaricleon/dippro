@@ -425,14 +425,15 @@ func nodeCoreToNodeModel(nodeCore corev1.Node, nodeMetric v1beta1.NodeMetrics) *
 
 	hostIP := getHostIp(nodeCore)
 
-	nodeModel := &model.Node{
-		Id:         nodeCore.Name,
-		InternalIp: hostIP,
-		Resources: model.NodeResources{
-			CpuUsage: cpuPercentage,
-			RamUsage: memoryPercentage,
-		},
-	}
+	   nodeModel := &model.Node{
+		   Id:         nodeCore.Name,
+		   InternalIp: hostIP,
+		   Resources: model.NodeResources{
+			   CpuUsage: cpuPercentage,
+			   RamUsage: memoryPercentage,
+		   },
+		   Architecture: nodeCore.Labels["kubernetes.io/arch"],
+	   }
 
 	nodeLabelsToNodeModel(nodeCore.Labels, nodeModel)
 
