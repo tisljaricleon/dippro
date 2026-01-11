@@ -8,7 +8,7 @@ kubectl label --overwrite nodes sem2-desktop fl/num-partitions=2
 kubectl label --overwrite nodes sem2-desktop fl/partition-id=0
 
 # Normal (x86_64) client node
-kubectl label --overwrite nodes worker1 fl/type=client kubernetes.io/arch=amd64
-kubectl label --overwrite nodes worker1 comm/user=100
-kubectl label --overwrite nodes worker1 fl/num-partitions=2
-kubectl label --overwrite nodes worker1 fl/partition-id=1
+kubectl label --overwrite nodes worker fl/type=client kubernetes.io/arch=amd64
+kubectl label --overwrite nodes worker comm/user=100
+kubectl label --overwrite nodes worker fl/num-partitions=2
+kubectl label --overwrite nodes worker fl/partition-id=1
