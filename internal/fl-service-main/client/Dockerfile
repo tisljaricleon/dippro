@@ -1,10 +1,12 @@
+
 FROM python:3.10-slim
 
 WORKDIR /home
 
-# Only install what's needed to build Python packages
+# Only install what's needed to build Python packages and enable HTTPS
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies (CPU-only PyTorch)
