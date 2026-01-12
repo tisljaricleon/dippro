@@ -214,6 +214,15 @@ func BuildClientDeployment(client *model.FlClient) *appsv1.Deployment {
 							   },
 						   },
 					   },
+					   DNSPolicy: corev1.DNSClusterFirst,
+					   DNSConfig: &corev1.PodDNSConfig{
+						   Options: []corev1.PodDNSConfigOption{
+							   {
+								   Name:  "ndots",
+								   Value: func() *string { s := "1"; return &s }(),
+							   },
+						   },
+					   },
 				   },
 			   },
 		   },
