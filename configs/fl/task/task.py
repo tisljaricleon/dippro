@@ -57,6 +57,7 @@ fds = None  # Cache FederatedDataset
 def load_data(partition_id: int, num_partitions: int, batch_size: int):
     """Load partition CIFAR10 data."""
     # Only initialize `FederatedDataset` once
+    import logging
     global fds
     if fds is None:
         partitioner = IidPartitioner(num_partitions=num_partitions)
@@ -64,7 +65,24 @@ def load_data(partition_id: int, num_partitions: int, batch_size: int):
             dataset="uoft-cs/cifar10",
             partitioners={"train": partitioner},
         )
-    partition = fds.load_partition(partition_id)
+    import requests
+    hub_url = "https://huggingface.co"
+    try:
+        logging.info(f"Checking internet connectivity to {hub_url}...")
+        response = requests.get(hub_url, timeout=5)
+        if response.status_code == 200:
+            logging.info(f"Internet connectivity OK. Hugging Face Hub reachable.")
+        else:
+            logging.warning(f"Received status code {response.status_code} from Hugging Face Hub.")
+    except Exception as e:
+        logging.error(f"Internet connectivity check failed: {e}")
+    logging.info(f"Attempting to load partition {partition_id} from FederatedDataset...")
+    try:
+        partition = fds.load_partition(partition_id)
+        logging.info(f"Successfully loaded partition {partition_id}.")
+    except Exception as e:
+        logging.error(f"Failed to load partition {partition_id}: {e}")
+        raise
     # Divide data on each node: 80% train, 20% test
     partition_train_test = partition.train_test_split(test_size=0.2, seed=42)
     pytorch_transforms = Compose(

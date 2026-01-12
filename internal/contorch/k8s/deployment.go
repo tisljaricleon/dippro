@@ -53,11 +53,11 @@ func BuildGlobalAggregatorDeployment(aggregator *model.FlAggregator) *appsv1.Dep
 							Resources: corev1.ResourceRequirements{
 								Requests: corev1.ResourceList{
 									corev1.ResourceCPU:    resource.MustParse("1.0"),
-									corev1.ResourceMemory: resource.MustParse("1500Mi"),
+									corev1.ResourceMemory: resource.MustParse("500Mi"),
 								},
 								Limits: corev1.ResourceList{
 									corev1.ResourceCPU:    resource.MustParse("2.0"),
-									corev1.ResourceMemory: resource.MustParse("2000Mi"),
+									corev1.ResourceMemory: resource.MustParse("1Gi"),
 								},
 							},
 						},
