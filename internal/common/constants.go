@@ -4,7 +4,7 @@ package common
 const FL_CLIENT_IMAGE = "fatseal/hfl-client-normal:1.0"
 const FL_CLIENT_IMAGE_JETSON = "fatseal/hfl-client-jetson:0.1"
 const LOCAL_AGGRETATOR_IMAGE = "cilicivan96/hfl-local-server:0.2"
-const GLOBAL_AGGRETATOR_IMAGE = "aiotwin/hfl-global-server:0.1"
+const GLOBAL_AGGRETATOR_IMAGE = "fatseal/hfl-global-aggregator:0.1"
 
 // FL Client configs
 const FL_CLIENT_DEPLOYMENT_PREFIX = "fl-cl"
