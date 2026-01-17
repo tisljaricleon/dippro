@@ -1,16 +1,14 @@
 
-FROM nvcr.io/nvidia/pytorch:23.11-py3-igpu
+FROM python:3.10-slim
 
 WORKDIR /home
 
-
-
-
 COPY requirements.txt /home/
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
 
-
+# Clean up build tools if not needed at runtime
+RUN apt-get purge -y build-essential && apt-get autoremove -y
 
 COPY client.py /home/
 
