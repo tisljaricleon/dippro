@@ -2,6 +2,7 @@
 # Cifar10 - IID
 # lr = 0.01, batch_size = 32, epochs = 3
 #
+
 from collections import OrderedDict
 import torch
 import torch.nn as nn
@@ -10,6 +11,12 @@ from flwr_datasets import FederatedDataset
 from flwr_datasets.partitioner import IidPartitioner
 from torch.utils.data import DataLoader
 from torchvision.transforms import Compose, Normalize, ToTensor
+
+# Print CUDA availability and device info at import
+if torch.cuda.is_available():
+    print("[INFO] CUDA is available. Using GPU:", torch.cuda.get_device_name(0))
+else:
+    print("[INFO] CUDA is NOT available. Using CPU only.")
 
 
 class Net(nn.Module):
