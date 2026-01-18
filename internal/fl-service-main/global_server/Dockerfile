@@ -7,8 +7,6 @@ COPY requirements.txt /home/
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
 
-# Clean up build tools if not needed at runtime
-RUN apt-get purge -y build-essential && apt-get autoremove -y
 
 COPY global_server.py /home/
 

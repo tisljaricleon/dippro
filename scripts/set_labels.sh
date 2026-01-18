@@ -1,5 +1,5 @@
 # global aggregator
-kubectl label --overwrite nodes raspberrypi fl/type=global_aggregator
+kubectl label --overwrite nodes raspberrypi fl/type=local_aggregator
 
 # Jetson (ARM64) client node
 kubectl label --overwrite nodes sem2-desktop fl/type=client kubernetes.io/arch=arm64

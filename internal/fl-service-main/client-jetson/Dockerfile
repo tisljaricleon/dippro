@@ -3,19 +3,14 @@ FROM nvcr.io/nvidia/pytorch:23.11-py3-igpu
 
 WORKDIR /home
 
-# Only install what's needed to build Python packages and enable HTTPS
+# Only install what's needed to enable HTTPS
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies (CPU-only PyTorch)
+# Install Python dependencies (do not upgrade pip)
 COPY requirements.txt /home/
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Clean up build tools if not needed at runtime
-RUN apt-get purge -y build-essential && apt-get autoremove -y
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY client.py /home/
 
